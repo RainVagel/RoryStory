@@ -1,9 +1,11 @@
 package sample;
 
+import java.io.IOException;
+
 /**
  * Created by rainvagel on 14/05/15.
  */
-class JubaKasutatudErind extends Exception {
+class JubaKasutatudErind extends IOException {
     JubaKasutatudErind(){
         super();
     }
