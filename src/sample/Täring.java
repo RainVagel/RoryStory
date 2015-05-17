@@ -9,7 +9,7 @@ import java.util.ArrayList;
  */
 public class Täring {
     private String nimetus;
-    private ArrayList<Image> pildid;
+    private ArrayList<Image> pildid = new ArrayList<Image>();
 
     public Täring(String nimetus){
         this.nimetus = nimetus;
