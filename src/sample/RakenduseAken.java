@@ -9,6 +9,8 @@ import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.WritableImage;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
@@ -20,11 +22,16 @@ import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+/*
+Kasutaja saab ise täringutele enda pilte lisada. Selleks peal olema piltide kaust, kus sees on üheksa kausta. Iga kaust ühe täringu jaoks.
+Lisaks sellele peab igas täringu kaustas olema 6 pilti täringu külgede jaoks.
+ */
+
 
 /**
  * Created by rainvagel on 14/05/15.
  */
-public class RakenduseAken extends Application{
+public class RakenduseAken extends Application {
     Täring esimene = new Täring("Esimene");
     Täring teine = new Täring("Teine");
     Täring kolmas = new Täring("Kolmas");
@@ -37,6 +44,15 @@ public class RakenduseAken extends Application{
     static BorderPane piiriPaan = new BorderPane();
     static GridPane grid = new GridPane();
     static GridPane gridAlumine = new GridPane();
+    ImageView iv1 = new ImageView();
+    ImageView iv2 = new ImageView();
+    ImageView iv3 = new ImageView();
+    ImageView iv4 = new ImageView();
+    ImageView iv5 = new ImageView();
+    ImageView iv6 = new ImageView();
+    ImageView iv7 = new ImageView();
+    ImageView iv8 = new ImageView();
+    ImageView iv9 = new ImageView();
 
 
     public void start(Stage peaLava)throws Exception{
@@ -44,7 +60,6 @@ public class RakenduseAken extends Application{
 
         File fail = new File("logi.txt");
         PrintWriter välja = new PrintWriter(new FileWriter(fail,true));
-
 
         ColumnConstraints col1 = new ColumnConstraints();
         ColumnConstraints col2 = new ColumnConstraints();
@@ -54,6 +69,7 @@ public class RakenduseAken extends Application{
         RowConstraints row3 = new RowConstraints();
         ColumnConstraints col1Alla = new ColumnConstraints();
         ColumnConstraints col2Alla = new ColumnConstraints();
+        ColumnConstraints col3Alla = new ColumnConstraints();
 
         row1.setPercentHeight(33);
         row2.setPercentHeight(33);
@@ -61,27 +77,18 @@ public class RakenduseAken extends Application{
         col1.setPercentWidth(33);
         col2.setPercentWidth(33);
         col3.setPercentWidth(33);
-        col1Alla.setPercentWidth(50);
-        col2Alla.setPercentWidth(50);
+        col1Alla.setPercentWidth(33);
+        col2Alla.setPercentWidth(33);
+        col3Alla.setPercentWidth(33);
 
         grid.getColumnConstraints().addAll(col1,col2,col3);
         grid.getRowConstraints().addAll(row1,row2,row3);
         grid.setMaxSize(300,300);
-        gridAlumine.getColumnConstraints().addAll(col1Alla, col2Alla);
+        gridAlumine.getColumnConstraints().addAll(col1Alla, col2Alla,col3Alla);
         gridAlumine.setMaxSize(300,300);
 
 
-        ImageView iv1 = new ImageView();
-        ImageView iv2 = new ImageView();
-        ImageView iv3 = new ImageView();
-        ImageView iv4 = new ImageView();
-        ImageView iv5 = new ImageView();
-        ImageView iv6 = new ImageView();
-        ImageView iv7 = new ImageView();
-        ImageView iv8 = new ImageView();
-        ImageView iv9 = new ImageView();
-
-        iv1.fitHeightProperty().bind(row1.percentHeightProperty().multiply(3));
+        iv1.fitHeightProperty().bind(row1.percentHeightProperty().multiply(3));     //ImageView akende suurused panen siin paika
         iv1.fitWidthProperty().bind(col1.percentWidthProperty().multiply(3));
         iv2.fitHeightProperty().bind(row1.percentHeightProperty().multiply(3));
         iv2.fitWidthProperty().bind(col1.percentWidthProperty().multiply(3));
@@ -141,44 +148,37 @@ public class RakenduseAken extends Application{
         start.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event){
-                iv1.setEffect(null);
-                iv2.setEffect(null);
-                iv3.setEffect(null);
-                iv4.setEffect(null);
-                iv5.setEffect(null);
-                iv6.setEffect(null);
-                iv7.setEffect(null);
-                iv8.setEffect(null);
-                iv9.setEffect(null);
-                iv1.setImage(esimene.võtaPilt());
-                iv2.setImage(teine.võtaPilt());
-                iv3.setImage(kolmas.võtaPilt());
-                iv4.setImage(neljas.võtaPilt());
-                iv5.setImage(viies.võtaPilt());
-                iv6.setImage(kuues.võtaPilt());
-                iv7.setImage(seitsmes.võtaPilt());
-                iv8.setImage(kaheksas.võtaPilt());
-                iv9.setImage(üheksas.võtaPilt());
+                if(gridAlumine.getChildren().size() == 3) {
+                    gridAlumine.getChildren().remove(2);
+                }
+                startNupp(välja);
+            }
+        });
 
-                    Date aeg = new Date();
-                    SimpleDateFormat formaat = new SimpleDateFormat("yyyy-MM-dd HH-mm-ss");
-                    välja.println(formaat.format(aeg) + ", " + iv1.getImage().toString() + ", " +  iv2.getImage().toString()
-                            + ", " + iv3.getImage().toString() + ", " +
-                            iv4.getImage().toString() + ", " +  iv5.getImage().toString() + ", " + iv6.getImage().toString() + ", " +
-                            iv7.getImage().toString() + ", " + iv8.getImage().toString() + ", " + iv9.getImage().toString() + "\n");
-
-                    välja.flush();
+        start.setOnKeyPressed(new EventHandler<KeyEvent>(){
+            @Override
+            public void handle(KeyEvent event){
+                if(event.getCode() == KeyCode.SPACE){
+                if(gridAlumine.getChildren().size() == 3) {
+                    gridAlumine.getChildren().remove(2);
+                }
+                    startNupp(välja);
+                }
             }
         });
 
         logi.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                File fail = new File("logi.txt");
-                try {
-                    java.awt.Desktop.getDesktop().edit(fail);
-                } catch(IOException e){
-                    System.out.println("Logifaili ei leitud!");
+                logiNupp();
+            }
+        });
+
+        logi.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                if(event.getCode() == KeyCode.SPACE){
+                    logiNupp();
                 }
             }
         });
@@ -204,6 +204,45 @@ public class RakenduseAken extends Application{
 
     public static void main(String[] args) throws Exception{
         launch(args);
+    }
+
+    void startNupp(PrintWriter välja){
+        iv1.setEffect(null);
+        iv2.setEffect(null);
+        iv3.setEffect(null);
+        iv4.setEffect(null);
+        iv5.setEffect(null);
+        iv6.setEffect(null);
+        iv7.setEffect(null);
+        iv8.setEffect(null);
+        iv9.setEffect(null);
+        iv1.setImage(esimene.võtaPilt());
+        iv2.setImage(teine.võtaPilt());
+        iv3.setImage(kolmas.võtaPilt());
+        iv4.setImage(neljas.võtaPilt());
+        iv5.setImage(viies.võtaPilt());
+        iv6.setImage(kuues.võtaPilt());
+        iv7.setImage(seitsmes.võtaPilt());
+        iv8.setImage(kaheksas.võtaPilt());
+        iv9.setImage(üheksas.võtaPilt());
+
+        Date aeg = new Date();
+        SimpleDateFormat formaat = new SimpleDateFormat("yyyy-MM-dd HH-mm-ss");
+        välja.println(formaat.format(aeg) + ", " + iv1.getImage().toString() + ", " + iv2.getImage().toString()
+                + ", " + iv3.getImage().toString() + ", " +
+                iv4.getImage().toString() + ", " + iv5.getImage().toString() + ", " + iv6.getImage().toString() + ", " +
+                iv7.getImage().toString() + ", " + iv8.getImage().toString() + ", " + iv9.getImage().toString() + "\n");
+
+        välja.flush();
+    }
+
+    void logiNupp(){
+        File fail = new File("logi.txt");
+        try {
+            java.awt.Desktop.getDesktop().edit(fail);
+        } catch(IOException e){
+            System.out.println("Logifaili ei leitud!");
+        }
     }
 
     void otsidaPilte(File fail, Täring täring) throws IOException {    //See programm vaatab läbi iga täringu kausta ning
