@@ -12,7 +12,6 @@ import javafx.scene.image.WritableImage;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import javax.imageio.ImageIO;
@@ -42,6 +41,10 @@ public class RakenduseAken extends Application{
 
     public void start(Stage peaLava)throws Exception{
         peaLava.setTitle("Story Cubes");
+
+        File fail = new File("logi.txt");
+        PrintWriter välja = new PrintWriter(new FileWriter(fail,true));
+
 
         ColumnConstraints col1 = new ColumnConstraints();
         ColumnConstraints col2 = new ColumnConstraints();
@@ -157,19 +160,14 @@ public class RakenduseAken extends Application{
                 iv8.setImage(kaheksas.võtaPilt());
                 iv9.setImage(üheksas.võtaPilt());
 
-                try{
                     Date aeg = new Date();
                     SimpleDateFormat formaat = new SimpleDateFormat("yyyy-MM-dd HH-mm-ss");
-                    File fail = new File("logi.txt");
-                    PrintWriter välja = new PrintWriter(fail);
-                    välja.println(formaat.format(aeg) + iv1.getImage().toString() + iv2.getImage().toString() + iv3.getImage().toString() +
-                            iv4.getImage().toString() + iv5.getImage().toString() + iv6.getImage().toString() +
-                            iv7.getImage().toString() + iv8.getImage().toString() + iv9.getImage().toString() + "\n");
+                    välja.println(formaat.format(aeg) + ", " + iv1.getImage().toString() + ", " +  iv2.getImage().toString()
+                            + ", " + iv3.getImage().toString() + ", " +
+                            iv4.getImage().toString() + ", " +  iv5.getImage().toString() + ", " + iv6.getImage().toString() + ", " +
+                            iv7.getImage().toString() + ", " + iv8.getImage().toString() + ", " + iv9.getImage().toString() + "\n");
 
                     välja.flush();
-                } catch(IOException e){
-                    System.out.println("Viga logi kirjutamises");
-                }
             }
         });
 
@@ -180,9 +178,7 @@ public class RakenduseAken extends Application{
                 try {
                     java.awt.Desktop.getDesktop().edit(fail);
                 } catch(IOException e){
-                    Text viga = new Text("Logifaili ei leitud!");
-//                    piiriPaan.setBottom(viga);
-                    grid.add(viga,3,4);
+                    System.out.println("Logifaili ei leitud!");
                 }
             }
         });
