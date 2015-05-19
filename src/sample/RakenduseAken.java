@@ -212,15 +212,16 @@ public class RakenduseAken extends Application{
 
     void otsidaPilte(File fail, Täring täring) throws IOException {    //See programm vaatab läbi iga täringu kausta ning
         File[] pildid = fail.listFiles();                              //lisab need pildid sellele täringule.
-        if(pildid != null) {
-            for (File pilt:pildid) {
+        try {
+            for (File pilt : pildid) {
                 BufferedImage pilt1 = ImageIO.read(pilt);
-                if(pilt1 != null) {
+                if (pilt1 != null) {
                     Image pilt2 = SwingFXUtils.toFXImage(pilt1, new WritableImage(50, 50));
                     täring.lisaPilt(pilt2);
-                } else{System.out.println("Yo!");}
+                }
             }
+        } catch(NullPointerException e){
+            System.out.println("Pilte pole!");
         }
-        else {System.out.println("Hey!");}
     }
 }

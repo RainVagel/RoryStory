@@ -12,10 +12,16 @@ import javafx.scene.text.Text;
 class pildiRuutVajutatud implements EventHandler<MouseEvent> {
     @Override
     public void handle(MouseEvent event){
-        BoxBlur blur = new BoxBlur();
-        blur.setIterations(5);
-        ImageView x = (ImageView) event.getSource();
-        x.setEffect(blur);
-        System.out.println("Vajutatud");
+        try {
+            BoxBlur blur = new BoxBlur();
+            blur.setIterations(5);
+            ImageView x = (ImageView) event.getSource();
+            if (x.getEffect() != null) {
+                throw new JubaKasutatudErind();
+            }
+            x.setEffect(blur);
+        }catch(JubaKasutatudErind e){
+            System.out.println("Juba vajutatud!");
+        }
     }
 }
