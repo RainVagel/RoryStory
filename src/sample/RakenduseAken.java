@@ -118,7 +118,7 @@ public class RakenduseAken extends Application {
         grid.add(iv7,0,2);
         grid.add(iv8,1,2);
         grid.add(iv9,2,2);
-        grid.setMargin(iv1, new Insets(5, 5, 5, 5));
+        grid.setMargin(iv1, new Insets(5,5,5,5));
         grid.setMargin(iv2, new Insets(5,5,5,5));
         grid.setMargin(iv3, new Insets(5,5,5,5));
         grid.setMargin(iv4, new Insets(5,5,5,5));
